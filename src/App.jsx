@@ -1,4 +1,5 @@
-import Quotes from "./Quotes";
+import Quotes from "./components/Quotes"
+
 
 function App(){
   return(
