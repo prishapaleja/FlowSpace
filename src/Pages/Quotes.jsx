@@ -87,15 +87,15 @@ useEffect(()=>{
             {/* <h2 className="text-5xl text-[#0E0859]">{quote}</h2> */}
              <div className="flex items-center justify-center w-full"><h2 className="text-1xl sm:text-1xl md:text-3xl lg:text-4xl text-[#0E0859] text-center" style={{ textShadow: '2px 2px 4px rgba(0,0,0,0.5)' }}>{quote?.quote}</h2></div>
             {/* <button onClick={getData}>Get Data</button> */}
-            <div className="flex items-center justify-evenly w-[10rem] sm:w-[10rem] sm:h-[4rem] md:w-60 md:h-15 m-[6rem] font-semibold bg-blue-200 [box-shadow:8px_8px_15px_rgba(0,0,0,0.3)] rounded ">
+            <div className="flex items-center justify-evenly w-[10rem] sm:w-[10rem] sm:h-[4rem] md:w-60 md:h-15 m-[6rem] font-semibold bg-blue-200 [box-shadow:8px_8px_15px_rgba(0,0,0,0.3)] rounded-2xl ">
             <div className="hover:cursor-pointer hover:scale-150"> <FontAwesomeIcon icon={isLiked ? solidHeart : regularHeart} style={{ color: "#ff0000", cursor: "pointer" }} onClick={toggleLike}/></div>
             <div className="hover:cursor-pointer hover:scale-150" onClick={copyQuote}><FontAwesomeIcon icon={faCopy} style={{ color: "#0d2b5e" }} /></div>
             <div className="hover:cursor-pointer hover:scale-150"onClick={downloadQuote}><FontAwesomeIcon icon={faDownload} style={{ color: "#24385c" }} /></div>
             </div>
             </div>
            <div className="flex flex-col mt-[8vh] items-center justify-center w-full max-w-5xl max-h-[50rem]">
-            <h2 className=" text-[#0E0859] text-2xl">Liked Quotes</h2>
-             <div className="flex flex-col gap-[2rem] items-center rounded w-full h-[80vh] overflow-y-auto justify-start mt-[2rem] p-2 bg-[#DBF4FF]">
+            <h2 className=" text-[#0E0859] text-3xl">Liked Quotes</h2>
+             <div className="flex flex-col gap-[2rem] items-center rounded w-full h-auto overflow-y-auto justify-start mt-[2rem] p-2 bg-[#DBF4FF]">
               {
               likedQuotes.map((q, i) => (
                <div key={i} className="bg-white w-[80%] sm:w-[45%] md:w-[60%] lg:w-full rounded border-1 border-[#0E0859] [box-shadow:8px_8px_15px_rgba(0,0,0,0.3)] text-[#0E0859] flex justify-center items-center p-4">
