@@ -10,7 +10,7 @@ function App() {
 
   return (
     <div>
-      <button onClick={() => setIsOpen(!isOpen)} className="fixed top-[2.2rem] left-[4rem] sm:left-[10rem] md:left-[8rem] lg:left-[2rem] z-20 p-2 text-blue-900 rounded-md hover:bg-blue-200 hover:shadow-sm text-2xl w-[2.5rem]">
+      <button onClick={() => setIsOpen(!isOpen)} className="fixed top-[0.6rem] sm: left-[2rem] md:left-[6rem] lg:left-[1rem] z-20 p-2 bg-blue-50 text-blue-900 rounded-md hover:bg-blue-600 hover:text-white hover:shadow-sm text-2xl w-[2.5rem]">
         ☰
       </button>
 
