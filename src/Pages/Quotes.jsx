@@ -43,8 +43,8 @@ const downloadQuote = () => {
 
   // Create a temporary link
   const link = document.createElement("a");
-  link.href = URL.createObjectURL(file); // Point link to our "file"
-  link.download = "quote.txt"; // Name of the file
+  link.href = URL.createObjectURL(file); // Point link to our file
+  link.download = "quote.txt"; 
 
   // Click the link programmatically to trigger download
   link.click();
@@ -86,11 +86,12 @@ useEffect(()=>{
             <div className="flex flex-col justify-center items-center h-[100vh] w-[80%] sm:w-[60%] md:w-[80%] lg:w-full p-10 m-1.5 bg-gradient-to-t from-[#07B9FF] to-[#DBF4FF]">
             {/* <h2 className="text-5xl text-[#0E0859]">{quote}</h2> */}
              <div className="flex items-center justify-center w-full"><h2 className="text-1xl sm:text-1xl md:text-3xl lg:text-4xl text-[#0E0859] text-center" style={{ textShadow: '2px 2px 4px rgba(0,0,0,0.5)' }}>{quote?.quote}</h2></div>
-            {/* <button onClick={getData}>Get Data</button> */}
             <div className="flex items-center justify-evenly w-[10rem] sm:w-[10rem] sm:h-[4rem] md:w-60 md:h-15 m-[6rem] font-semibold bg-blue-200 [box-shadow:8px_8px_15px_rgba(0,0,0,0.3)] rounded-2xl ">
             <div className="hover:cursor-pointer hover:scale-150"> <FontAwesomeIcon icon={isLiked ? solidHeart : regularHeart} style={{ color: "#ff0000", cursor: "pointer" }} onClick={toggleLike}/></div>
             <div className="hover:cursor-pointer hover:scale-150" onClick={copyQuote}><FontAwesomeIcon icon={faCopy} style={{ color: "#0d2b5e" }} /></div>
             <div className="hover:cursor-pointer hover:scale-150"onClick={downloadQuote}><FontAwesomeIcon icon={faDownload} style={{ color: "#24385c" }} /></div>
+            </div>
+            <div className="bg-blue-200 text-blue-900 mt-[-4rem] p-4 rounded-2xl flex hover:bg-blue-300 hover:cursor-pointer"><button onClick={getData}>New Quote</button>
             </div>
             </div>
            <div className="flex flex-col mt-[8vh] items-center justify-center w-full max-w-5xl max-h-[50rem]">
