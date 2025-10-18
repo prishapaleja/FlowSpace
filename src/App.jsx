@@ -5,6 +5,7 @@ import HomePage from "./Pages/HomePage";
 import NotesPage from "./Pages/NotesPage";
 import SideNavbar from "./components/SideNavbar";
 
+
 function App() {
   const [isOpen, setIsOpen] = useState(false);
 

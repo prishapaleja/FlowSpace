@@ -7,7 +7,7 @@ function SideNavbar({ isOpen, setIsOpen }) {
         ✕
       </button>
 
-      <Link to="/" onClick={() => setIsOpen(false)}>Home</Link>
+      <div><Link to="/" onClick={() => setIsOpen(false)}>Home</Link></div>
       <Link to="/todo" onClick={() => setIsOpen(false)}>To-Do List</Link>
       <Link to="/notes" onClick={() => setIsOpen(false)}>Notes Page</Link>
       <Link to="/pomodoro" onClick={() => setIsOpen(false)}>Pomodoro Timer</Link>

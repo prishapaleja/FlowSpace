@@ -3,7 +3,6 @@ import {
   faFolder,
   faFile,
   faEllipsisV,
-  faHouse,
 } from "@fortawesome/free-solid-svg-icons";
 import { useState, useEffect } from "react";
 
@@ -176,13 +175,13 @@ const openFolder = (folder) => {
                           onClick={() => togglePin(file)}
                           className="block w-full text-left px-3 py-2 hover:bg-gray-100"
                         >
-                          {data.pinned.includes(file) ? "📌 Unpin" : "📌 Pin"}
+                          {data.pinned.includes(file) ? "Unpin" : "Pin"}
                         </button>
                         <button
                           onClick={() => deleteNote(file, folder)}
                           className="block w-full text-left px-3 py-2 text-red-600 hover:bg-gray-100"
                         >
-                          🗑️ Delete
+                          Delete
                         </button>
                       </div>
                     )}
@@ -197,25 +196,17 @@ const openFolder = (folder) => {
       {/* Main Section */}
       <div className="flex flex-col p-4 sm:ml-[0rem] md:ml-[10rem] lg:ml-[15rem] ml-0 w-full gap-8">
         {!selectedNote && (
-          <>
+          <div>
             {/* Pinned Notes */}
-            <div className="w-full p-4 bg-blue-200 rounded-md mt-[5rem]">
+            <div className="w-full p-4 rounded-md mt-[5rem]">
               <h2 className="text-3xl text-[#0E0859] mb-6">Pinned Notes</h2>
               <div className="flex flex-wrap gap-6">
                 {data.pinned.length === 0 ? (
                   <p className="text-gray-600">No pinned notes yet</p>
                 ) : (
                   data.pinned.map((note) => (
-                    <div
-                      key={note}
-                      className="flex flex-col items-center justify-center relative bg-white p-3 rounded-md shadow-md w-[8rem] cursor-pointer"
-                      onClick={() => openFile(null, note)}
-                    >
-                      <FontAwesomeIcon
-                        icon={faFile}
-                        style={{ color: "#07B9FF" }}
-                        className="w-[5rem] h-[5rem]"
-                      />
+                    <div key={note} className="flex flex-col items-center justify-center relative bg-white p-3 rounded-md shadow-md w-[8rem] cursor-pointer" onClick={() => openFile(null, note)}>
+                      <FontAwesomeIcon icon={faFile} style={{ color: "#07B9FF" }} className="w-[5rem] h-[5rem]"/>
                       <p className="mt-2 text-center break-words">{note}</p>
                     </div>
                   ))
@@ -223,36 +214,27 @@ const openFolder = (folder) => {
               </div>
             </div>
 
-            <div className="w-full p-4 bg-blue-200 rounded-md mt-[5rem]">
-  <h2 className="text-3xl text-[#0E0859] mb-6">Recent Folders</h2>
+              {/* Recent Folders */}
+            <div className="w-full p-4 rounded-md mt-[5rem]">
+             <h2 className="text-3xl text-[#0E0859] mb-6">Recent Folders</h2>
 
-  {recentFolders.length === 0 ? (
-    <p className="text-gray-600 text-lg">No folders opened yet.</p>
-  ) : (
-    <div className="flex gap-6 flex-wrap">
-      {recentFolders.map((folder) => (
-        <div
-          key={folder}
-          className="flex flex-col items-center justify-center cursor-pointer"
-          onClick={() => openFolder(folder)}
-        >
-          <FontAwesomeIcon
-            icon={faFolder}
-            style={{ color: "#0E0859" }}
-            className="w-[7rem] h-[4rem]"
-          />
+             {recentFolders.length === 0 ? (<p className="text-gray-600 text-lg">No folders opened yet.</p>) : (
+           <div className="flex gap-6 flex-wrap">
+          {recentFolders.map((folder) => (
+         <div key={folder} className="flex flex-col items-center justify-center cursor-pointer" onClick={() => openFolder(folder)}>
+          <FontAwesomeIcon icon={faFolder} style={{ color: "#0E0859" }} className="w-[7rem] h-[4rem]"/>
           <p className="mt-2 text-lg font-medium text-blue-900">{folder}</p>
         </div>
       ))}
-    </div>
-  )}
-</div>
+      </div>
+      )}
+     </div>
 
             
-          </>
+          </div>
         )}
 
-        {/* Editor */}
+        {/* Edit Notes */}
         {selectedNote && (
           <div className="w-full p-4 bg-blue-200 rounded-md">
             <button
