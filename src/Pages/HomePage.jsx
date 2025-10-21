@@ -9,12 +9,14 @@ import {
   faQuoteLeft,
   faQuoteRight
 } from "@fortawesome/free-solid-svg-icons";
+import Loader from "../components/loader";
 function HomePage(){
     return(
+        
         <div className="flex justify-center items-center bg-gradient-to-t from-[#07B9FF] to-[#DBF4FF] h-screen">
             
             <div className="flex flex-col text-4xl text-blue-900 gap-8  justify-center items-center">
-                <div><h1 className="text-5xl text-blue-800 ">Hello,User</h1></div>
+                <Loader/>
                 <div className="flex gap-8 justify-center items-center text-2xl  lg:flex-row flex-wrap sm:p-8 p-[2rem]">
                 <div className="flex flex-col gap-4 justify-center items-center bg-gradient-to-t from-[#1F10BF] to-[#0E0859] shadow-md rounded-3xl text-white hover:shadow-sm text-xl sm:text-2xl md:text-3xl  h-[15vh] w-[45vw] sm:h-[20vh] sm:w-[30vw] md:h-[30vh] md:w-[40vw] lg:h-[45vh] lg:w-[15vw] hover:border-2 hover:cursor-pointer p-2">
                     <FontAwesomeIcon icon={faClipboard} style={{color: "#ffffff",}} className="text-5xl"/>

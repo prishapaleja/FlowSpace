@@ -5,6 +5,7 @@ import {
   faEllipsisV,
 } from "@fortawesome/free-solid-svg-icons";
 import { useState, useEffect } from "react";
+import FolderModal from "../components/FolderModal";
 
 function NotesPage() {
   const [data, setData] = useState({ folders: {}, pinned: [] });
@@ -15,8 +16,9 @@ function NotesPage() {
   const [expandedFolders, setExpandedFolders] = useState({});
   const [sidebarOpen, setSidebarOpen] = useState(true); // mobile toggle
   const [recentFolders, setRecentFolders] = useState(
-  JSON.parse(localStorage.getItem("recentFolders")) || []
-);
+  JSON.parse(localStorage.getItem("recentFolders")) || []);
+  const [showFolderModal,setShowFolderModal]=useState(false);
+  const [showFileModal,setShowFileModal]=useState(false);
 
   useEffect(() => {
     const saved = localStorage.getItem("notesData");
@@ -31,26 +33,27 @@ function NotesPage() {
   localStorage.setItem("recentFolders", JSON.stringify(recentFolders));
   }, [recentFolders]);
 
-  const createFolder = () => {
-    const name = prompt("Enter folder name:");
+  const createFolder = (name) => {
     if (!name) return;
     if (data.folders[name]) return alert("Folder exists!");
     setData({ ...data, folders: { ...data.folders, [name]: { files: {} } } });
   };
 
-  const createFile = (folder) => {
+  const createFile = (folder,file) => {
     if (!folder) return alert("Select a folder first!");
-    const noteName = prompt("Enter file name:");
-    if (!noteName) return;
-    const updated = { ...data };
-    updated.folders[folder].files[noteName] = "";
+    if (data.folders[folder].files[file]) {
+    return alert("File already exists!");
+  }
+    if (!file) return;
+    const updated = { ...data }; //copy data 
+    updated.folders[folder].files[file] = "";
     setData(updated);
   };
 
-  const openFile = (folder, note) => {
+  const openFile = (folder, file) => {
     setSelectedFolder(folder);
-    setSelectedNote(note);
-    setNoteContent(folder ? data.folders[folder].files[note] : "");
+    setSelectedNote(file);
+    setNoteContent(folder ? data.folders[folder].files[file] : "");
   };
 
   const saveNote = (content) => {
@@ -87,10 +90,6 @@ const openFolder = (folder) => {
     return updated.slice(0, 5); // keep only 5 most recent
   });
 };
-
-
-
-
   return (
     <div className="flex">
       {/* Mobile toggle button */}
@@ -100,25 +99,30 @@ const openFolder = (folder) => {
         Folders
       </button>
 
+      {
+        showFolderModal && <FolderModal type="folder" onClose={()=>{setShowFolderModal(false)}} onSubmit={createFolder}/>
+      }
+      {
+        showFileModal && <FolderModal type="file" onClose={()=>{setShowFileModal(false)}} onSubmit={(file)=>createFile(selectedFolder,file)}/>
+      }
       {/* Sidebar */}
       <div
         className={`fixed top-0 left-0 h-screen bg-blue-200 p-4 overflow-y-auto transition-transform duration-300 z-40
         ${sidebarOpen ? "translate-x-0" : "-translate-x-full"} md:translate-x-0 md:w-[18vw] w-[60vw]`}
       >
         <button
-          onClick={createFolder}
+          onClick={()=>setShowFolderModal(true)}
           className="bg-blue-700 text-white px-3 py-2 w-full rounded-md mt-[3rem] sm:mt-[2rem] md:mt-[5rem]"
         >
           + New Folder
         </button>
 
+
         {Object.keys(data.folders).map((folder) => (
           <div key={folder} className="relative mt-2">
             <div
               className="bg-white w-full p-3 flex items-center justify-between cursor-pointer rounded-md shadow-md"
-             onClick={() => openFolder(folder)}
-
-            >
+             onClick={() => openFolder(folder)}>
               <div className="flex items-center gap-2">
                 <FontAwesomeIcon
                   icon={faFolder}
@@ -126,18 +130,48 @@ const openFolder = (folder) => {
                 />
                 {folder}
               </div>
-              
-              <button
-                onClick={(e) => {
-                  e.stopPropagation();
-                  createFile(folder);
-                }}
-                className="bg-blue-500 text-white w-[1.3rem] h-[1.3rem] rounded-full text-sm font-extrabold hover:bg-blue-600"
-              >
-                +
-              </button>
-            
+             
+            <button
+              onClick={() =>
+              setMenuOpen(menuOpen === folder ? null : folder)
+              }
+              className="text-gray-600 hover:text-black"
+            >
+            <FontAwesomeIcon icon={faEllipsisV} />
+            </button>
             </div>
+            {menuOpen === folder && (
+           <div className="absolute bg-white border border-gray-200 rounded-md shadow-md z-10 w-[6rem] right-0 mt-2">
+    <button
+      onClick={() => {
+        setSelectedFolder(folder);
+        setShowFileModal(true); // show file modal to add file in this folder
+        setMenuOpen(null); // close menu after click
+      }}
+      className="block w-full text-left px-3 py-2 hover:bg-gray-100"
+    >
+      Add File
+    </button>
+    <button
+      onClick={() => {
+        if (confirm(`Delete folder "${folder}"?`)) {
+          const updated = { ...data };
+          delete updated.folders[folder];
+          setData(updated);
+          setMenuOpen(null);
+          setRecentFolders(prev => {
+          const updated = [folder, ...prev.filter(f => f !== folder)];
+         return updated.slice(0, 5); // keep only 5 most recent
+         });
+        }
+      }}
+      className="block w-full text-left px-3 py-2 text-red-600 hover:bg-gray-100"
+    >
+      Delete
+    </button>
+  </div>
+)}
+
 
             {expandedFolders[folder] && (
               <div className="ml-5 mt-1 flex flex-col gap-1">
