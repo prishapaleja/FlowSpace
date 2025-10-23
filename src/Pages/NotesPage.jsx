@@ -4,8 +4,12 @@ import {
   faFile,
   faEllipsisV,
 } from "@fortawesome/free-solid-svg-icons";
-import { useState, useEffect } from "react";
+
 import FolderModal from "../components/FolderModal";
+import { useRef, useEffect, useState } from "react";
+
+
+
 
 function NotesPage() {
   const [data, setData] = useState({ folders: {}, pinned: [] });
@@ -19,6 +23,8 @@ function NotesPage() {
   JSON.parse(localStorage.getItem("recentFolders")) || []);
   const [showFolderModal,setShowFolderModal]=useState(false);
   const [showFileModal,setShowFileModal]=useState(false);
+  const [searchTerm,setSearchTerm]=useState("");
+  const folderRefs = useRef({});
 
   useEffect(() => {
     const saved = localStorage.getItem("notesData");
@@ -33,6 +39,7 @@ function NotesPage() {
   localStorage.setItem("recentFolders", JSON.stringify(recentFolders));
   }, [recentFolders]);
 
+  
   const createFolder = (name) => {
     if (!name) return;
     if (data.folders[name]) return alert("Folder exists!");
@@ -89,12 +96,26 @@ const openFolder = (folder) => {
     const updated = [folder, ...prev.filter(f => f !== folder)];
     return updated.slice(0, 5); // keep only 5 most recent
   });
+   
+  const folderElement = folderRefs.current[folder];
+  if (folderElement) {
+    folderElement.scrollIntoView({
+      behavior: "smooth",
+      block: "center",
+    });
+
+    
+    folderElement.classList.add("bg-yellow-300", "shadow-lg","border-yellow-300","border-8");
+    setTimeout(() => {
+      folderElement.classList.remove("bg-yellow-300", "shadow-lg","border-yellow-300","border-8");
+    }, 1800);
+  }
 };
   return (
     <div className="flex">
       {/* Mobile toggle button */}
       <button
-        className="md:hidden fixed top-[2rem] right-[2rem] z-50 bg-blue-600 text-white px-3 py-2 rounded-md shadow-md"
+        className="md:hidden fixed top-[1rem] right-[2rem] z-50 bg-blue-600 text-white px-3 py-2 rounded-md shadow-md"
         onClick={() => setSidebarOpen(!sidebarOpen)}>
         Folders
       </button>
@@ -119,10 +140,13 @@ const openFolder = (folder) => {
 
 
         {Object.keys(data.folders).map((folder) => (
-          <div key={folder} className="relative mt-2">
-            <div
-              className="bg-white w-full p-3 flex items-center justify-between cursor-pointer rounded-md shadow-md"
-             onClick={() => openFolder(folder)}>
+  <div key={folder} className="relative mt-2" ref={(el) => (folderRefs.current[folder] = el)}>
+    <div
+      className={`bg-white w-full p-3 flex items-center justify-between cursor-pointer rounded-md shadow-md ${
+        folder === selectedFolder ? "border-2 border-blue-600" : ""
+      }`}
+      onClick={() => openFolder(folder)}
+    >
               <div className="flex items-center gap-2">
                 <FontAwesomeIcon
                   icon={faFolder}
@@ -159,10 +183,7 @@ const openFolder = (folder) => {
           delete updated.folders[folder];
           setData(updated);
           setMenuOpen(null);
-          setRecentFolders(prev => {
-          const updated = [folder, ...prev.filter(f => f !== folder)];
-         return updated.slice(0, 5); // keep only 5 most recent
-         });
+        setRecentFolders((prev)=>prev.filter(f=>f!==folder));
         }
       }}
       className="block w-full text-left px-3 py-2 text-red-600 hover:bg-gray-100"
@@ -229,10 +250,72 @@ const openFolder = (folder) => {
 
       {/* Main Section */}
       <div className="flex flex-col p-4 sm:ml-[0rem] md:ml-[10rem] lg:ml-[15rem] ml-0 w-full gap-8">
+        
         {!selectedNote && (
+          
           <div>
+          <div className="flex md:justify-end sm:justify-center justify-center mt-[3rem] sm:mt-[0rem]">
+          <div><input type="search" placeholder="Search notes or folder" className="border-2 border-blue-300 rounded-lg sm:p-2 text-gray-400 on focus:outline-none focus:shadow-lg w-[15rem]" value={searchTerm} onChange={(e)=>setSearchTerm(e.target.value)}/></div>
+          {/* <div><button className="bg-blue-200 text-blue-900 sm:p-2 rounded-tr-lg rounded-br-lg border-2 hover:bg-blue-400 hover:text-white">Search</button></div> */}
+          </div>
+
+          
+            
+      {searchTerm ? (
+  <div>
+    <h2 className="text-3xl text-[#0E0859] mb-[1rem]">
+      Search Results for "{searchTerm}"
+    </h2>
+
+    {(() => {
+      const results = Object.keys(data.folders)
+        .map((folder) => {
+          const folderMatches = folder.toLowerCase().includes(searchTerm.toLowerCase());
+          const matchingFiles = Object.keys(data.folders[folder].files).filter((file) =>
+            file.toLowerCase().includes(searchTerm.toLowerCase())
+          );
+
+          if (!folderMatches && matchingFiles.length === 0) return null;
+
+          return (
+            <div key={folder} className="mb-[2rem]">
+              {folderMatches && (
+                <div className="flex items-center gap-2">
+                  <FontAwesomeIcon icon={faFolder} className="text-blue-700 w-[2rem] h-[2rem]"/>
+                <h3 className="text-xl font-semibold text-blue-900 cursor-pointer"onClick={() => openFolder(folder)}>
+                  {folder}
+                </h3>
+                </div>
+              )}
+
+              <div className="ml-4 flex flex-col gap-2 mt-2">
+                {matchingFiles.map((file) => (
+                  <div
+                    key={file}
+                    className="bg-white p-2 rounded-md cursor-pointer hover:bg-blue-100 flex items-center gap-2"
+                    onClick={() => openFile(folder, file)}
+                  >
+                    <FontAwesomeIcon icon={faFile} className="text-blue-600" />
+                    {file} <span className="text-gray-400 ml-1">({folder})</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          );
+        })
+        .filter(Boolean);
+
+      if (results.length === 0)
+        return <p className="text-gray-600 text-lg">No matching folders or files found.</p>;
+
+      return results;
+    })()}
+  </div>
+) : (
+          <>
             {/* Pinned Notes */}
-            <div className="w-full p-4 rounded-md mt-[5rem]">
+            
+            <div className="w-full p-4 rounded-md">
               <h2 className="text-3xl text-[#0E0859] mb-6">Pinned Notes</h2>
               <div className="flex flex-wrap gap-6">
                 {data.pinned.length === 0 ? (
@@ -249,7 +332,7 @@ const openFolder = (folder) => {
             </div>
 
               {/* Recent Folders */}
-            <div className="w-full p-4 rounded-md mt-[5rem]">
+            <div className="w-full p-4 rounded-md mt-[2rem]">
              <h2 className="text-3xl text-[#0E0859] mb-6">Recent Folders</h2>
 
              {recentFolders.length === 0 ? (<p className="text-gray-600 text-lg">No folders opened yet.</p>) : (
@@ -264,8 +347,9 @@ const openFolder = (folder) => {
       )}
      </div>
 
-            
-          </div>
+           </> )
+        }
+        </div>  
         )}
 
         {/* Edit Notes */}
@@ -273,7 +357,7 @@ const openFolder = (folder) => {
           <div className="w-full p-4 bg-blue-200 rounded-md">
             <button
               onClick={() => setSelectedNote(null)}
-              className="mb-4 text-blue-700 underline"
+              className="mb-4 text-blue-700"
             >
               ← Back
             </button>

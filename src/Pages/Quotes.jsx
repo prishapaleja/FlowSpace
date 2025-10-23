@@ -1,7 +1,7 @@
 import axios from "axios"
 import { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {faCopy, faDownload } from "@fortawesome/free-solid-svg-icons";
+import {faCopy, faDownload, faShare } from "@fortawesome/free-solid-svg-icons";
 import { faHeart as solidHeart } from "@fortawesome/free-solid-svg-icons";
 import { faHeart as regularHeart } from "@fortawesome/free-regular-svg-icons";
 
@@ -56,7 +56,13 @@ const downloadQuote = () => {
       alert("Quote copied to clipboard!");
     
   };
+ 
+ const shareQuote=()=>{
+  if (!(quote.quote)) return;
 
+  console.log("share")
+  alert("Sharing..")
+ }
 
 
   const toggleLike = () => {
@@ -89,9 +95,10 @@ useEffect(()=>{
             <div className="flex items-center justify-evenly w-[10rem] sm:w-[10rem] sm:h-[4rem] md:w-60 md:h-15 m-[6rem] font-semibold bg-blue-200 [box-shadow:8px_8px_15px_rgba(0,0,0,0.3)] rounded-2xl ">
             <div className="hover:cursor-pointer hover:scale-150"> <FontAwesomeIcon icon={isLiked ? solidHeart : regularHeart} style={{ color: "#ff0000", cursor: "pointer" }} onClick={toggleLike}/></div>
             <div className="hover:cursor-pointer hover:scale-150" onClick={copyQuote}><FontAwesomeIcon icon={faCopy} style={{ color: "#0d2b5e" }} /></div>
-            <div className="hover:cursor-pointer hover:scale-150"onClick={downloadQuote}><FontAwesomeIcon icon={faDownload} style={{ color: "#24385c" }} /></div>
+            <div className="hover:cursor-pointer hover:scale-150"onClick={downloadQuote}><FontAwesomeIcon icon={faDownload} style={{ color: "#0d2b5e" }} /></div>
+            <div className="hover:cursor-pointer hover:scale-150"onClick={shareQuote}><FontAwesomeIcon icon={faShare} style={{ color: "#0d2b5e" }} /></div>
             </div>
-            <div className="bg-blue-200 text-blue-900 mt-[-4rem] p-4 rounded-2xl flex hover:bg-blue-300 hover:cursor-pointer"><button onClick={getData}>New Quote</button>
+            <div className="bg-blue-200 text-[#0E0859] mt-[-4rem] p-4 rounded-2xl flex hover:bg-blue-300 hover:cursor-pointer font-semibold"><button onClick={getData}>New Quote</button>
             </div>
             </div>
            <div className="flex flex-col mt-[8vh] items-center justify-center w-full max-w-5xl max-h-[50rem]">
