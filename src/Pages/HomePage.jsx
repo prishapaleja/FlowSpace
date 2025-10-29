@@ -20,19 +20,19 @@ function HomePage(){
                 <div className="flex gap-8 justify-center items-center text-2xl  lg:flex-row flex-wrap sm:p-8 p-[2rem]">
                 <div className="flex flex-col gap-4 justify-center items-center bg-gradient-to-t from-[#1F10BF] to-[#0E0859] shadow-md rounded-3xl text-white hover:shadow-sm text-xl sm:text-2xl md:text-3xl  h-[15vh] w-[45vw] sm:h-[20vh] sm:w-[30vw] md:h-[30vh] md:w-[40vw] lg:h-[45vh] lg:w-[15vw] hover:border-2 hover:cursor-pointer p-2">
                     <FontAwesomeIcon icon={faClipboard} style={{color: "#ffffff",}} className="text-5xl"/>
-                    <Link to="/todo">To-Do</Link>
+                    <Link to="/ToDo">To-Do</Link>
                 </div>
                 <div className="flex flex-col gap-4 justify-center items-center bg-gradient-to-t from-[#1F10BF] to-[#0E0859] shadow-md rounded-3xl text-white hover:shadow-sm text-xl sm:text-2xl md:text-3xl h-[15vh] w-[45vw] sm:h-[20vh] sm:w-[30vw] md:h-[30vh] md:w-[40vw] lg:h-[45vh] lg:w-[15vw] hover:border-2 hover:cursor-pointer p-2">
                     <FontAwesomeIcon icon={faListCheck} style={{color: "#ffffff",}} className="text-5xl" />
-                    <Link to="/notes">Notes</Link>
+                    <Link to="/NotesPage">Notes</Link>
                     </div>
                 <div className="flex flex-col gap-4 justify-center items-center bg-gradient-to-t from-[#1F10BF] to-[#0E0859] shadow-md rounded-3xl text-white hover:shadow-sm text-xl sm:text-2xl md:text-3xl  h-[15vh] w-[45vw] sm:h-[20vh] sm:w-[30vw] md:h-[30vh] md:w-[40vw] lg:h-[45vh] lg:w-[15vw] hover:border-2 hover:cursor-pointer p-6">
                     <FontAwesomeIcon icon={faStopwatch} style={{color: "#ffffff",}} className="text-5xl" />
-                    <Link to="/pomodoro">Pomodoro Timer</Link>
+                    <Link to="/Timer">Pomodoro Timer</Link>
                     </div>
                 <div className="flex flex-col gap-4 justify-center items-center bg-gradient-to-t from-[#1F10BF] to-[#0E0859] shadow-md rounded-3xl text-white hover:shadow-sm text-xl sm:text-2xl md:text-3xl  h-[15vh] w-[45vw] sm:h-[20vh] sm:w-[30vw] md:h-[30vh] md:w-[40vw] lg:h-[45vh] lg:w-[15vw] hover:border-2 hover:cursor-pointer p-2">
                     <div className="border-2 px-2 py-4 sm:px-4 sm:py-6 rounded-tr-2xl rounded-bl-2xl "><FontAwesomeIcon icon={faQuoteLeft} style={{color: "#ffffff",}} className="text-3xl" /><FontAwesomeIcon icon={faQuoteRight} style={{color: "#ffffff",}} className="text-3xl"/></div>
-                    <Link to="/quote">Quotes</Link>
+                    <Link to="/Quotes">Quotes</Link>
                     </div>
                 </div>
             </div>
