@@ -25,6 +25,8 @@ function App() {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/quote" element={<Quotes />} />
+          <Route path="/timer" element={<Timer />} />
+          <Route path="/todo" element={<ToDo />} />
           <Route path="/notes" element={<NotesPage />} />
         </Routes>
       </div>
