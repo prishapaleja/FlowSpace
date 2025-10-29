@@ -2,6 +2,8 @@ import { Routes, Route } from "react-router-dom";
 import { useState } from "react";
 import Quotes from "./Pages/Quotes";
 import HomePage from "./Pages/HomePage";
+import Timer from "./Pages/Timer";
+import ToDo from "./Pages/ToDo";
 import NotesPage from "./Pages/NotesPage";
 import SideNavbar from "./components/SideNavbar";
 
@@ -23,11 +25,11 @@ function App() {
   
       <div className={`relative z-0 h-full w-full bg-white transition-all duration-300 ${ isOpen ? "blur-[2px]" : "" }`}>
         <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/quote" element={<Quotes />} />
-          <Route path="/timer" element={<Timer />} />
-          <Route path="/todo" element={<ToDo />} />
-          <Route path="/notes" element={<NotesPage />} />
+          <Route path="/" element={<HomePage/>} />
+          <Route path="/quote" element={<Quotes/>} />
+          <Route path="/timer" element={<Timer/>} />
+          <Route path="/todo" element={<ToDo/>} />
+          <Route path="/notes" element={<NotesPage/>} />
         </Routes>
       </div>
     </div>
