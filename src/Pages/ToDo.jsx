@@ -50,11 +50,7 @@ export default function TodoApp() {
     <div className="min-h-screen bg-gradient-to-br from-cyan-300 via-cyan-400 to-blue-400 flex items-center justify-center p-4">
       <div className="w-full max-w-2xl">
         {/* Header */}
-        <div className="flex items-center mb-8 px-4">
-          <button className="text-gray-800 hover:text-gray-600">
-            <Menu size={28} />
-          </button>
-        </div>
+        
 
         {/* Main Card */}
         <div className="bg-white rounded-3xl shadow-2xl p-8">

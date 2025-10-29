@@ -63,11 +63,7 @@ export default function PomodoroTimer() {
     <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
       <div className="w-full max-w-md">
         {/* Header */}
-        <div className="flex items-center mb-8 px-4">
-          <button className="text-gray-800 hover:text-gray-600">
-            <Menu size={28} />
-          </button>
-        </div>
+       
 
         {/* Main Card */}
         <div className="bg-white rounded-3xl shadow-xl p-8 flex flex-col items-center">
