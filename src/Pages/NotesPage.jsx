@@ -369,7 +369,7 @@ const openFolder = (folder) => {
 
         {/* Edit Notes */}
         {selectedNote && (
-          <div className="w-full p-4 bg-blue-200 rounded-md mt-[5rem] sm:mt-[4rem] md:mt-[1rem]">
+          <div className="lg:w-full p-4 bg-blue-200 rounded-md mt-[5rem] sm:mt-[4rem] md:mt-[1rem]">
             <button
               onClick={() => setSelectedNote(null)}
               className="mb-4 text-blue-700"
@@ -380,7 +380,7 @@ const openFolder = (folder) => {
             <textarea
               value={noteContent}
               onChange={(e) => saveNote(e.target.value)}
-              className="w-full h-[70vh] border border-gray-300 rounded-md p-4 resize-none"
+              className="w-full h-[70vh] border border-gray-300 rounded-md p-4 resize-none "
               placeholder="Write your note here..."
             />
           </div>
