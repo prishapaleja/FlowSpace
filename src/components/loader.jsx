@@ -6,7 +6,7 @@ const Loader = () => {
    <StyledWrapper>
   <div className="card">
     <div className="loader">
-      <p>Loading</p>
+      <p className="ml-[4rem]">Loading</p>
       <div className="words">
         <span className="word">ideas</span>
         <span className="word">tasks</span>

@@ -30,10 +30,13 @@ function NotesPage() {
     const saved = localStorage.getItem("notesData");
     if (saved) setData(JSON.parse(saved));
   }, []);
+  
 
   useEffect(() => {
     localStorage.setItem("notesData", JSON.stringify(data));
   }, [data]);
+
+
 
   useEffect(() => {
   localStorage.setItem("recentFolders", JSON.stringify(recentFolders));
@@ -69,19 +72,30 @@ function NotesPage() {
     updated.folders[selectedFolder].files[selectedNote] = content;
     setData(updated);
     setNoteContent(content);
-  };
+  };  
 
-  const togglePin = (note) => {
-    const pinned = data.pinned.includes(note)? data.pinned.filter((n) => n !== note): [...data.pinned, note];
-    setData({ ...data, pinned });
-    setMenuOpen(null);
-  };
+  const togglePin = (folder,file) => {
+  const existing = data.pinned.find((p) => p.file === file && p.folder === folder);
+
+  let pinned;
+  if (existing) {
+    // Unpin if already pinned
+    pinned = data.pinned.filter((p) => !(p.file === file && p.folder === folder));
+  } else {
+    // Add new pin
+    pinned = [...data.pinned, { folder, file }];
+  }
+
+  setData({ ...data, pinned });
+  setMenuOpen(null);
+};
+
 
   const deleteNote = (note, folder) => {
    if(!confirm("You want to Delete?"))  return;
     const updated = { ...data };
     if (folder) delete updated.folders[folder].files[note];
-    updated.pinned = updated.pinned.filter((n) => n !== note);
+    updated.pinned = updated.pinned.filter((p) => !(p.file === note && p.folder === folder));
     setData(updated);
     setMenuOpen(null);
     if (selectedNote === note) setSelectedNote(null); //close the selected note if user viewing the note deletes the same note
@@ -224,22 +238,22 @@ const openFolder = (folder) => {
                       <FontAwesomeIcon icon={faEllipsisV} />
                     </button>
                     
-                    {menuOpen === file && (
-                      <div className="absolute bg-white border border-gray-200 rounded-md shadow-md z-10 w-[5rem] right-0 mt-[10rem]">
-                        <button
-                          onClick={() => togglePin(file)}
-                          className="block w-full text-left px-3 py-2 hover:bg-gray-100"
-                        >
-                          {data.pinned.includes(file) ? "Unpin" : "Pin"}
-                        </button>
-                        <button
-                          onClick={() => deleteNote(file, folder)}
-                          className="block w-full text-left px-3 py-2 text-red-600 hover:bg-gray-100"
-                        >
-                          Delete
-                        </button>
-                      </div>
-                    )}
+                      {menuOpen === file && (
+                        <div className="absolute bg-white border border-gray-200 rounded-md shadow-md z-10 w-[5rem] right-0 mt-[10rem]">
+                          <button
+                            onClick={() => togglePin(folder,file)}
+                            className="block w-full text-left px-3 py-2 hover:bg-gray-100"
+                          >
+                            {data.pinned.some((p) => p.file === file && p.folder === folder)? "Unpin" : "Pin"}
+                          </button>
+                          <button
+                            onClick={() => deleteNote(folder,file)}
+                            className="block w-full text-left px-3 py-2 text-red-600 hover:bg-gray-100"
+                          >
+                            Delete
+                          </button>
+                        </div>
+                      )}
                   </div>
                 ))}
               </div>
@@ -322,9 +336,10 @@ const openFolder = (folder) => {
                   <p className="text-gray-600">No pinned notes yet</p>
                 ) : (
                   data.pinned.map((note) => (
-                    <div key={note} className="flex flex-col items-center justify-center relative bg-white p-3 rounded-md shadow-md w-[8rem] cursor-pointer" onClick={() => openFile(null, note)}>
+                    <div key={note} className="flex flex-col items-center justify-center relative bg-white p-3 rounded-md shadow-md w-[8rem] cursor-pointer" onClick={() => openFile(note.folder, note.file)}>
                       <FontAwesomeIcon icon={faFile} style={{ color: "#07B9FF" }} className="w-[5rem] h-[5rem]"/>
-                      <p className="mt-2 text-center break-words">{note}</p>
+                      <p className="mt-2 text-center break-words">{note.file}</p>
+                      <span className="text-sm text-gray-400">({note.folder})</span>
                     </div>
                   ))
                 )}
@@ -354,7 +369,7 @@ const openFolder = (folder) => {
 
         {/* Edit Notes */}
         {selectedNote && (
-          <div className="w-full p-4 bg-blue-200 rounded-md">
+          <div className="w-full p-4 bg-blue-200 rounded-md mt-[5rem] sm:mt-[4rem] md:mt-[1rem]">
             <button
               onClick={() => setSelectedNote(null)}
               className="mb-4 text-blue-700"

@@ -4,8 +4,12 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {faCopy, faDownload, faShare } from "@fortawesome/free-solid-svg-icons";
 import { faHeart as solidHeart } from "@fortawesome/free-solid-svg-icons";
 import { faHeart as regularHeart } from "@fortawesome/free-regular-svg-icons";
+import {
+  TwitterShareButton,
+} from "react-share";
 
 function Quotes(){
+     const shareUrl=window.location.href;
     const[quote,setQuote]=useState(null);
     const [likedQuotes, setLikedQuotes] = useState([]);
     // const quotes="Its not over until i win."
@@ -57,12 +61,6 @@ const downloadQuote = () => {
     
   };
  
- const shareQuote=()=>{
-  if (!(quote.quote)) return;
-
-  console.log("share")
-  alert("Sharing..")
- }
 
 
   const toggleLike = () => {
@@ -91,12 +89,13 @@ useEffect(()=>{
         <div className="flex justify-center items-center flex-col w-full p-4">
             <div className="flex flex-col justify-center items-center h-[100vh] w-[80%] sm:w-[60%] md:w-[80%] lg:w-full p-10 m-1.5 bg-gradient-to-t from-[#07B9FF] to-[#DBF4FF]">
             {/* <h2 className="text-5xl text-[#0E0859]">{quote}</h2> */}
-             <div className="flex items-center justify-center w-full"><h2 className="text-1xl sm:text-1xl md:text-3xl lg:text-4xl text-[#0E0859] text-center" style={{ textShadow: '2px 2px 4px rgba(0,0,0,0.5)' }}>{quote?.quote}</h2></div>
+            <div className="flex items-center justify-center w-full"><h2 className="text-2xl sm:text-3xl md:text-4xl text-[#0E0859] text-center mt-[2rem]" style={{ textShadow: '2px 2px 4px rgba(0,0,0,0.5)' }}>{quote?.quote}</h2></div>
+             <div className="flex items-center justify-center w-full"><h2 className="text-1xl sm:text-1xl lg:text-2xl text-[#52506e] mt-[2rem]" style={{ textShadow: '2px 2px 4px rgba(0,0,0,0.5)' }}>~ {quote?.author}</h2></div>
             <div className="flex items-center justify-evenly w-[10rem] sm:w-[10rem] sm:h-[4rem] md:w-60 md:h-15 m-[6rem] font-semibold bg-blue-200 [box-shadow:8px_8px_15px_rgba(0,0,0,0.3)] rounded-2xl ">
             <div className="hover:cursor-pointer hover:scale-150"> <FontAwesomeIcon icon={isLiked ? solidHeart : regularHeart} style={{ color: "#ff0000", cursor: "pointer" }} onClick={toggleLike}/></div>
             <div className="hover:cursor-pointer hover:scale-150" onClick={copyQuote}><FontAwesomeIcon icon={faCopy} style={{ color: "#0d2b5e" }} /></div>
-            <div className="hover:cursor-pointer hover:scale-150"onClick={downloadQuote}><FontAwesomeIcon icon={faDownload} style={{ color: "#0d2b5e" }} /></div>
-            <div className="hover:cursor-pointer hover:scale-150"onClick={shareQuote}><FontAwesomeIcon icon={faShare} style={{ color: "#0d2b5e" }} /></div>
+            <div className="hover:cursor-pointer hover:scale-150" onClick={downloadQuote}><FontAwesomeIcon icon={faDownload} style={{ color: "#0d2b5e" }} /></div>
+            <div className="hover:cursor-pointer hover:scale-150"><TwitterShareButton url={shareUrl}><FontAwesomeIcon icon={faShare} style={{ color: "#0d2b5e" }} /></TwitterShareButton></div>
             </div>
             <div className="bg-blue-200 text-[#0E0859] mt-[-4rem] p-4 rounded-2xl flex hover:bg-blue-300 hover:cursor-pointer font-semibold"><button onClick={getData}>New Quote</button>
             </div>
