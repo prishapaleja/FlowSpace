@@ -60,7 +60,7 @@ export default function PomodoroTimer() {
     : ((BREAK_TIME - timeLeft) / BREAK_TIME) * 100;
 
   return (
-    <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gradient-to-t from-[#07B9FF] to-[#DBF4FF] flex items-center justify-center p-4">
       <div className="w-full max-w-md">
         {/* Header */}
        
