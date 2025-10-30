@@ -13,8 +13,8 @@ import Loader from "../components/loader";
 function HomePage(){
     return(
         
-        <div className="flex justify-center items-center bg-gradient-to-t from-[#07B9FF] to-[#DBF4FF] h-screen w-full">
-            
+        <div className="flex justify-center items-center bg-gradient-to-t from-[#07B9FF] to-[#DBF4FF] h-screen w-full relative">
+            <div className="absolute top-4 right-4 text-2xl font-bold text-blue-900">FlowSpace</div>
             <div className="flex flex-col text-4xl text-blue-900 gap-8  justify-center items-center">
                 <Loader/>
                 <div className="flex gap-8 justify-center items-center text-2xl  lg:flex-row flex-wrap sm:p-8 p-[2rem]">
