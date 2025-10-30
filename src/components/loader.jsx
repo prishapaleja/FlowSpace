@@ -6,7 +6,7 @@ const Loader = () => {
    <StyledWrapper>
   <div className="card">
     <div className="loader">
-      <p className="ml-[4rem]">Loading</p>
+      <p className="ml-[5.3rem] text-1xl ">Loading</p>
       <div className="words">
         <span className="word">ideas</span>
         <span className="word">tasks</span>
@@ -33,18 +33,19 @@ const StyledWrapper = styled.div`
     color: #07B9FF;
     font-family: "Poppins", sans-serif;
     font-weight: 500;
-    font-size: 3rem;
     -webkit-box-sizing: content-box;
     box-sizing: content-box;
     height: 3rem;
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
+    margin-top:2rem;
   }
 
   .words {
     overflow: hidden;
     position: relative;
+    
   }
   .words::after {
     content: "";
