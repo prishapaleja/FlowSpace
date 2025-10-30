@@ -2,19 +2,19 @@ import React, { useState } from 'react';
 import { Menu, Edit2, Trash2 } from 'lucide-react';
 
 export default function TodoApp() {
-  const [tasks, setTasks] = useState([
-    { id: 1, text: 'Homework', completed: false },
-    { id: 2, text: 'Groceries', completed: false }
-  ]);
+  const [tasks, setTasks] = useState([]);
   const [inputValue, setInputValue] = useState('');
+  const [deadlineValue, setDeadlineValue] = useState('');
   const [hoveredTask, setHoveredTask] = useState(null);
   const [editingTask, setEditingTask] = useState(null);
   const [editValue, setEditValue] = useState('');
+  const [editDeadline, setEditDeadline] = useState('');
 
   const addTask = () => {
     if (inputValue.trim()) {
-      setTasks([...tasks, { id: Date.now(), text: inputValue, completed: false }]);
+      setTasks([...tasks, { id: Date.now(), text: inputValue, completed: false, deadline: deadlineValue }]);
       setInputValue('');
+      setDeadlineValue('');
     }
   };
 
@@ -31,20 +31,30 @@ export default function TodoApp() {
   const startEditing = (task) => {
     setEditingTask(task.id);
     setEditValue(task.text);
+    setEditDeadline(task.deadline || '');
   };
 
   const saveEdit = (id) => {
     if (editValue.trim()) {
       setTasks(tasks.map(task => 
-        task.id === id ? { ...task, text: editValue } : task
+        task.id === id ? { ...task, text: editValue, deadline: editDeadline } : task
       ));
     }
     setEditingTask(null);
     setEditValue('');
+    setEditDeadline('');
   };
 
   const completedCount = tasks.filter(t => t.completed).length;
   const totalCount = tasks.length;
+
+  // Sort tasks by deadline
+  const sortedTasks = [...tasks].sort((a, b) => {
+    if (!a.deadline && !b.deadline) return 0;
+    if (!a.deadline) return 1;
+    if (!b.deadline) return -1;
+    return new Date(a.deadline) - new Date(b.deadline);
+  });
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-cyan-300 via-cyan-400 to-blue-400 flex items-center justify-center p-4">
@@ -67,6 +77,12 @@ export default function TodoApp() {
               onChange={(e) => setInputValue(e.target.value)}
               onKeyPress={(e) => e.key === 'Enter' && addTask()}
               className="flex-1 px-6 py-4 bg-cyan-50 rounded-full border-none outline-none text-gray-700 placeholder-cyan-400 focus:ring-2 focus:ring-cyan-300"
+            />
+            <input
+              type="date"
+              value={deadlineValue}
+              onChange={(e) => setDeadlineValue(e.target.value)}
+              className="px-6 py-3 bg-cyan-50 rounded-full border-none outline-none text-gray-700 focus:ring-2 focus:ring-cyan-300"
             />
             <button
               onClick={addTask}
@@ -92,7 +108,7 @@ export default function TodoApp() {
 
           {/* Tasks List */}
           <div className="space-y-3">
-            {tasks.map((task) => (
+            {sortedTasks.map((task) => (
               <div
                 key={task.id}
                 className={`relative flex items-center gap-4 px-6 py-4 rounded-full transition-all duration-200 ${
@@ -125,19 +141,34 @@ export default function TodoApp() {
 
                 {/* Task Text */}
                 {editingTask === task.id ? (
-                  <input
-                    type="text"
-                    value={editValue}
-                    onChange={(e) => setEditValue(e.target.value)}
-                    onBlur={() => saveEdit(task.id)}
-                    onKeyPress={(e) => e.key === 'Enter' && saveEdit(task.id)}
-                    className="flex-1 bg-transparent border-none outline-none text-gray-800"
-                    autoFocus
-                  />
+                  <div className="flex-1 flex flex-col gap-2">
+                    <input
+                      type="text"
+                      value={editValue}
+                      onChange={(e) => setEditValue(e.target.value)}
+                      onBlur={() => saveEdit(task.id)}
+                      onKeyPress={(e) => e.key === 'Enter' && saveEdit(task.id)}
+                      className="bg-transparent border-none outline-none text-gray-800"
+                      autoFocus
+                    />
+                    <input
+                      type="date"
+                      value={editDeadline}
+                      onChange={(e) => setEditDeadline(e.target.value)}
+                      className="bg-transparent border-none outline-none text-gray-600 text-sm"
+                    />
+                  </div>
                 ) : (
-                  <span className={`flex-1 text-gray-800 ${task.completed ? 'line-through' : ''}`}>
-                    {task.text}
-                  </span>
+                  <div className="flex-1">
+                    <span className={`text-gray-800 ${task.completed ? 'line-through' : ''}`}>
+                      {task.text}
+                    </span>
+                    {task.deadline && (
+                      <span className="ml-3 text-sm text-gray-500">
+                        Due: {new Date(task.deadline).toLocaleDateString()}
+                      </span>
+                    )}
+                  </div>
                 )}
 
                 {/* Action Buttons */}
