@@ -263,7 +263,7 @@ const openFolder = (folder) => {
       </div>
 
       {/* Main Section */}
-      <div className="flex flex-col p-4 sm:ml-[0rem] md:ml-[10rem] lg:ml-[15rem] ml-0 w-full gap-8">
+      <div className="flex flex-col p-4 ml-[0rem] md:ml-[12rem] lg:ml-[17rem] w-full gap-8">
         
         {!selectedNote && (
           
