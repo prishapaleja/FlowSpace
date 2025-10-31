@@ -5,7 +5,7 @@ const Switch = () => {
   return (
     <StyledWrapper>
       <label id="theme-toggle-button">
-        <input type="checkbox" id="toggle" />
+        <input type="checkbox" id="toggle" checked={isDarkMode} onChange={toggleDarkMode}/>
         <svg viewBox="0 0 69.667 44" xmlnsXlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg">
           <g transform="translate(3.5 3.5)" data-name="Component 15 – 1" id="Component_15_1">
             <g filter="url(#container)" transform="matrix(1, 0, 0, 1, -3.5, -3.5)">
@@ -58,10 +58,10 @@ const Switch = () => {
 const StyledWrapper = styled.div`
   /* The switch - the box around the slider */
   #theme-toggle-button {
-    font-size: 10px;
+    font-size: 12px;
     position: relative;
     display: inline-block;
-    width: 3.8em;
+    width: 4.5em;
     cursor: pointer;
   }
 
