@@ -58,10 +58,10 @@ const Switch = () => {
 const StyledWrapper = styled.div`
   /* The switch - the box around the slider */
   #theme-toggle-button {
-    font-size: 17px;
+    font-size: 10px;
     position: relative;
     display: inline-block;
-    width: 7em;
+    width: 3.8em;
     cursor: pointer;
   }
 
