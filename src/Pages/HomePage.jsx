@@ -29,7 +29,7 @@ function HomePage(){
                 <Loader/>
                 
             {/* Grid layout for better mobile experience */}
-            <div className="grid grid-cols-2 gap-3 sm:gap-4 md:gap-6 lg:grid-cols-4 lg:gap-8 lg:h-32 w-full px-2 sm:px-4">
+            <div className="grid grid-cols-2 gap-3 sm:gap-4 md:gap-6 lg:grid-cols-4 lg:gap-8 lg:h-auto w-full px-2 sm:px-4">
                 <Link to="/ToDo" className="w-full">
                     <div className="flex flex-col gap-1 sm:gap-2 justify-center items-center bg-gradient-to-t from-[#1F10BF] to-[#0E0859] dark:from-blue-600 dark:to-blue-800 shadow-md rounded-2xl sm:rounded-3xl text-white hover:shadow-xl transition-all text-xs sm:text-base md:text-xl lg:text-2xl h-28 sm:h-36 md:h-44 lg:h-52 hover:border-2 hover:scale-105 hover:cursor-pointer p-2 sm:p-4">
                         <FontAwesomeIcon icon={faClipboard} className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl"/>
