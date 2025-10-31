@@ -1,11 +1,16 @@
 import React from 'react';
 import styled from 'styled-components';
+import { useDarkMode } from './DarkModeContext';
+
+const DarkModeToggle = () => {
+  const { isDarkMode, toggleDarkMode } = useDarkMode();
 
 const Switch = () => {
   return (
     <StyledWrapper>
       <label id="theme-toggle-button">
         <input type="checkbox" id="toggle" checked={isDarkMode} onChange={toggleDarkMode}/>
+        <div>
         <svg viewBox="0 0 69.667 44" xmlnsXlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg">
           <g transform="translate(3.5 3.5)" data-name="Component 15 – 1" id="Component_15_1">
             <g filter="url(#container)" transform="matrix(1, 0, 0, 1, -3.5, -3.5)">
@@ -50,6 +55,7 @@ const Switch = () => {
             </g>
           </g>
         </svg>
+        </div>
       </label>
     </StyledWrapper>
   );
@@ -127,5 +133,6 @@ const StyledWrapper = styled.div`
   #toggle:checked + svg #stars {
     opacity: 1;
   }`;
+}
 
-export default Switch;
+export default DarkModeToggle;
